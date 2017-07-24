@@ -1,3 +1,5 @@
+#include "./headers/fuel_sensor_variables.h"
+
 void 
 calculate_cp(int tempCnt, 
              double &CPMethane, 
@@ -7,81 +9,93 @@ calculate_cp(int tempCnt,
              double &thermConEthane, 
              double &thermConCO2) 
 {
-    if (tempCnt == -20) {
+    switch (tempCnt) {
+
+      case -20: {  
         CPMethane = methane1 * gasvalue;
         CPCO2 = CO2neg20 * gasvalue;
         CPEthane = ethaneneg20 * gasvalue;
         thermConMethane = thermalConductMethaneneg20;
         thermConEthane = thermalConductEthaneneg20; 
-        thermConCO2 = thermalConductCO2neg20; 
-    }
-    if (tempCnt == 0) {
+        thermConCO2 = thermalConductCO2neg20;
+        break;
+      }
+      case 0: { 
         CPMethane = methane2 * gasvalue;
         CPCO2 = CO20 * gasvalue;
         CPEthane = ethane0 * gasvalue;
         thermConMethane = thermalConductMethane0;
         thermConEthane = thermalConductEthane0; 
-        thermConCO2 = thermalConductCO2zero; 
-    }
-    if (tempCnt == 20) {
+        thermConCO2 = thermalConductCO2zero;
+        break;
+      }
+      case 20: { 
         CPMethane = methane3 * gasvalue;
         CPCO2 = CO220 * gasvalue;
         CPEthane = ethane20 * gasvalue; 
         thermConMethane = thermalConductMethane20;
         thermConEthane = thermalConductEthane20; 
-        thermConCO2 = thermalConductCO220; 
-    }
-    if (tempCnt == 40) {
+        thermConCO2 = thermalConductCO220;
+        break;
+      }
+      case 40: {
         CPMethane = methane4 * gasvalue; 
         CPCO2 = CO240 * gasvalue;
         CPEthane = ethane40 * gasvalue;
         thermConMethane = thermalConductMethane40;
         thermConEthane = thermalConductEthane40; 
-        thermConCO2 = thermalConductCO240; 
-    }
-    if (tempCnt == 60) {
+        thermConCO2 = thermalConductCO240;
+        break;
+      }
+      case 60: {
         CPMethane = methane5 * gasvalue;
         CPCO2 = CO260 * gasvalue;
         CPEthane = ethane60 * gasvalue; 
         thermConMethane = thermalConductMethane60;
         thermConEthane = thermalConductEthane60; 
-        thermConCO2 = thermalConductCO260; 
-    }
-    if (tempCnt == 80) {
+        thermConCO2 = thermalConductCO260;
+        break;
+      }
+      case 80: { 
         CPMethane = methane6 * gasvalue; 
         CPCO2 = CO280 * gasvalue;
         CPEthane = ethane80 * gasvalue; 
         thermConMethane = thermalConductMethane80;
         thermConEthane = thermalConductEthane80; 
-        thermConCO2 = thermalConductCO280; 
+        thermConCO2 = thermalConductCO280;
+        break;
+      }
     }
-}
 
 
 
-int count = 1;
 
-for(int i = -20; i <= 80; i = i + 20) {
-    calculate_cp(i, CPMethane, CPCO2, CPEthane, thermConMethane, thermConEthane, thermConCO2);
+    int count = 1;
+    // Ambiguety with this for loop. It is set up as a parent for a nested for loop 
+    // but the syntax suggests it should be it's own for loop. I will treat it as a
+    // parent for loop.
+    // -RB
+    for(int i = -20; i <= 80; i = i + 20) {
+      calculate_cp(i, CPMethane, CPCO2, CPEthane, thermConMethane, thermConEthane, thermConCO2);
 
-    for(int pressure = 500; pressure <= 3000; pressure = pressure + 500) {
+      for(int pressure = 500; pressure <= 3000; pressure = pressure + 500) {
 
         for(int j = 0; j < v.size(); ++j) {
-            obtain_combinations(j, CombinationFossil, CombinationAnaerobic, CombinationLandfill);
+          obtain_combinations(j, CombinationFossil, CombinationAnaerobic, CombinationLandfill);
 
-            MethaneRatio = texasPipleineMethane*percentTexas + 
-                           rockyPipelineMethane*percentRocky + 
-                           peruvianLNGMethane*percentPeruvian + 
-                           highAssociated1Methane*percentHigh1 + 
-                           highAssociated2Methane*percentHigh2;
+          MethaneRatio = texasPipleineMethane*percentTexas 
+                       + rockyPipelineMethane*percentRocky 
+                       + peruvianLNGMethane*percentPeruvian 
+                       + highAssociated1Methane*percentHigh1 
+                       + highAssociated2Methane*percentHigh2;
 
             //Here the percent variable are the percentages the permutations should be generating
 
-            EthaneRatio = texasPipleineEthane*percentTexas + 
-                          rockyPipelineEthane*percentRocky + 
-                          peruvianLNGEthane*percentPeruvian + 
-                          highAssociated1Ethane*percentHigh1 + 
-                          highAssociated2Ethane*percentHigh2;
+            EthaneRatio = texasPipleineEthane*percentTexas 
+                        + rockyPipelineEthane*percentRocky 
+                        + peruvianLNGEthane*percentPeruvian 
+                        + highAssociated1Ethane*percentHigh1 
+                        + highAssociated2Ethane*percentHigh2;
 
 
             CO2Ratio = texasPipleineCO2*percentTexas + 
