@@ -53,7 +53,7 @@ const double thermalConductCO240 = 17.87;       //Thermal Conductivity of C02 at
 const double thermalConductCO260 = 19.52;
 const double thermalConductCO280 = 21.11;
 
-const double texasPipleineMethane = 0.96
+const double texasPipleineMethane = 0.96;
 const double texasPipleineEthane = .018;
 const double texasPipleineCO2 = 0.004;
 
@@ -62,7 +62,7 @@ const double rockyPipelineEthane = 0.035;
 const double rockyPipelineCO2 = 0.006;
 
 const double peruvianLNGMethane = 0.883;
-const double peruvianLNGEthane = 0.105
+const double peruvianLNGEthane = 0.105;
 const double peruvianLNGCO2 = 0;
 
 const double highAssociated1Methane = 0.8365;
@@ -72,3 +72,5 @@ const double highAssociated1CO2 = 0.027;
 const double highAssociated2Methane = 0.875;
 const double highAssociated2Ethane = 0.045;
 const double highAssociated2CO2 = 0.044;
+
+#endif
